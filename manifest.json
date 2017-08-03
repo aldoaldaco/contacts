@@ -1,0 +1,7 @@
+{
+  "name": "contacts",
+  "short_name": "contacts",
+  "description": "contacts agend",
+  "start_url": "/",
+  "display": "standalone"
+}

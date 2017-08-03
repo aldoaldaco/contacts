@@ -1,0 +1,24 @@
+{
+  "name": "ls",
+  "version": "0.0.1",
+  "description": "contact list agend",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aldoaldaco/contacts.git"
+  },
+  "keywords": [
+    "agend",
+    "contacts",
+    "lib"
+  ],
+  "author": "aldo aldaco",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aldoaldaco/contacts/issues"
+  },
+  "homepage": "https://github.com/aldoaldaco/contacts#readme"
+}
