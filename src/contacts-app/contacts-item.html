@@ -1,0 +1,73 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="contacts-item.html">
+
+<dom-module id="contacts-item">
+  <template>
+    <style>
+      :host {
+        background-color: var(--background-color-item,#204056);
+        color: var(--color-item,#FFFFFF);
+        font-family: var(--font-family-item,sans-serif);
+        display: flex;
+        flex-flow: row;
+        width: 100%;
+        height: 50px;
+      }
+      .container:hover{
+        cursor: pointer;
+        border: 1px solid #FFFFFF;
+      }
+      .image{
+        width: 30%;
+        height: 50px;
+        text-align: center;
+        cursor: pointer;
+      }
+      img{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+      .contactname{
+        width: 70%;
+        height: 100%;
+        text-align: center;
+        cursor: pointer;
+      }
+      p{
+        height: 100%;
+        margin: 0px;
+        font-size: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+    <div class="image">
+        <img src="[[contact.picture]]" alt="[[contact.name]]">
+    </div>
+    <div class="contactname">
+        <p>[[contact.name]]</p>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class ContactsItem extends Polymer.Element {
+      static get is() { return 'contacts-item'; }
+      static get properties() {
+        return {
+            contact: {
+                type: Object,
+                notify: true
+            }
+        };
+      }
+    }
+
+    window.customElements.define(ContactsItem.is, ContactsItem);
+  </script>
+</dom-module>

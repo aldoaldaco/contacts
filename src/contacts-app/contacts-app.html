@@ -1,4 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="/src/contacts-app/contacts-container.html">
+<link rel="import" href="/src/contacts-app/contacts-modal.html">
 
 <dom-module id="contacts-app">
   <template>
@@ -7,7 +9,8 @@
         display: block;
       }
     </style>
-    <h2>Hello [[prop1]]!</h2>
+    <contacts-container on-open-modal="handleOpenModal" new-contact="{{newCo}}"></contacts-container>
+    <contacts-modal on-save-contact="handleSaveContact" on-close-modal="handleCloseModal" status=[[open]]></contacts-modal>
   </template>
 
   <script>
@@ -19,11 +22,26 @@
       static get is() { return 'contacts-app'; }
       static get properties() {
         return {
-          prop1: {
-            type: String,
-            value: 'contacts-app'
+          open: {
+            type: Boolean,
+            value: false
+          },
+          newCo: {
+            type: Object,
+            notify: true,
+            reflectToAttribute: true
           }
         };
+      }
+      handleOpenModal(event){
+          this.open = event.detail;
+      }
+      handleCloseModal(event){
+          this.open = event.detail;
+      }
+      handleSaveContact(event){
+          this.newCo = event.detail;
+          //alert(this.newCo);
       }
     }
 

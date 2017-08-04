@@ -1,0 +1,149 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="contacts-item.html">
+
+<dom-module id="contacts-list">
+  <template>
+    <style>
+      :host {
+          width: 100%;
+          font-family: var(--font-family-list,sans-serif);
+          display: flex;
+          flex-flow: column;
+          border-radius: 5px;
+      }
+      .header{
+          width: 99%;
+          background-color: var(--background-color-list,#204056);
+          color: var(--color-list,#FFFFFF);
+          border: 1px solid #FFFFFF;
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+          text-align: center;
+      }
+      .container{
+          width: 99%;
+          height: auto;
+          display: flex;
+          flex-flow: column;
+          border-right: 1px solid #FFFFFF;
+          margin-bottom: 10px;
+      }
+      .button{
+          width: 99%;
+          font-weight: bold;
+          border-radius: 5px;
+          text-align: center;
+          cursor: pointer;
+      }
+      paper-button{
+          width: 100%;
+          margin: 0px;
+          background-color: #CCCCCC;
+          color: #204056;
+      }
+      contacts-item:hover{
+          cursor: pointer;
+          background-color: #cccccc;
+          color: #000000;
+      }
+    </style>
+    <div class="header">
+        <h2>[[title]]</h2>
+    </div>
+    <div class="container">
+        <template is="dom-repeat" items="{{contacts}}">
+            <contacts-item on-click="contactSelected" contact="[[item]]"></contacts-item>
+        </template>
+    </div>
+    <div class="button">
+        <paper-button on-click="openModal">New Contact</paper-button>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class ContactsList extends Polymer.Element {
+      static get is() { return 'contacts-list'; }
+      static get properties() {
+        return {
+          open:{
+            type: Boolean,
+            value: true,
+            notify: true
+          },
+          title:{
+            type: String,
+            value: "Contacts"
+          },
+          contacts: {
+            type: Array,
+            value: [
+                {
+                    "id": 1,
+                    "name": "Aldo",
+                    "picture": "http://via.placeholder.com/50x50",
+                    "biography": "Lorem ipsum dolor sit amet."
+                },
+                {
+                    "id": 2,
+                    "name": "Magaly",
+                    "picture": "http://via.placeholder.com/70x70",
+                    "biography": "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+                },
+                {
+                    "id": 3,
+                    "name": "Alfonso",
+                    "picture": "http://via.placeholder.com/90x90",
+                    "biography": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                },
+                {
+                    "id": 4,
+                    "name": "Jesus",
+                    "picture": "http://via.placeholder.com/110x110",
+                    "biography": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+                },
+                {
+                    "id": 5,
+                    "name": "Alberto",
+                    "picture": "http://via.placeholder.com/50x50",
+                    "biography": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+                }
+            ],
+            notify: true
+          },
+          newC: {
+              type: Object,
+              notify: true,
+              observer: "handleSave",
+              reflectToAttribute: true
+          }
+
+        };
+      }
+      openModal(){
+          this.dispatchEvent(new CustomEvent('open-modal', {
+              bubbles: true,
+              composed: true,
+              detail: this.open
+          }));
+      }
+      contactSelected(e){
+          this.dispatchEvent(new CustomEvent('contact-selected',{
+              bubbles: true,
+              composed: true,
+              detail: e.model.item
+          }));
+      }
+      handleSave(){
+          this.push('contacts',{name : this.newC.name, picture : this.newC.picture, biography : this.newC.biography});
+      }
+    }
+
+    window.customElements.define(ContactsList.is, ContactsList);
+  </script>
+</dom-module>

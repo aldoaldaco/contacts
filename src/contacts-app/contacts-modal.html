@@ -1,0 +1,135 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="contacts-modal">
+  <template>
+    <style>
+      :host{
+          text-align: center;
+          margin: 0 auto;
+      }
+      .box{
+          position: absolute;
+          top: 0px;
+          left: 0px;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.8);
+          text-align: center;
+      }
+      .container{
+          padding: 10px;
+          border-radius: 5px;
+          background-color: var(--background-color-modal,#CCCCCC);
+          color: var(--color-modal,#204056);
+          font-family: var(--font-family-modal,sans-serif);
+          width: var(--width-modal,40%);
+          height: var(--height-modal,50%);
+          color: #204056;
+          position: absolute;
+          top: 25%;
+          left: 30%;
+          z-index: 100;
+      }
+      span{
+          position: absolute;
+          top: 10px;
+          right: 25px;
+          font-size: 30px;
+      }
+      span:hover{
+          font-size: 32px;
+          font-weight: bold;
+          cursor: pointer;
+      }
+      h2{
+          margin: 0px;
+          margin-top: 30px;
+      }
+      paper-input{
+          --paper-input-container-focus-color: #204056;
+          width: var(--width-modal-input,80%);
+          margin: 0 auto;
+      }
+      paper-button{
+          font-weight: bold;
+          background-color: var(--background-color-modal-button,#204056);
+          color: var(--color-modal-button,#FFFFFF);
+          width: var(--width-modal-button,80%);
+          margin: 20px auto;
+      }
+    </style>
+    <template is="dom-if" if="{{status}}">
+        <div class="box">
+            <div class="container">
+                <span on-click="closeModal">&times;</span>
+                <h2>Add New Contact</h2>
+                <paper-input label="Name" value={{name}} label-float></paper-input>
+                <paper-input label="Picture" value={{picture}} float-label></paper-input>
+                <paper-input label="Biography" value={{biography}} float-label></paper-input>
+                <paper-button on-click="saveContact" indigo toggles>Save contact</paper-button>
+            </div>
+        </div>
+    </template>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class ContactsModal extends Polymer.Element {
+      static get is() { return 'contacts-modal'; }
+      static get properties() {
+        return {
+          name:{
+            type: String,
+            notify: true
+          },
+          picture:{
+            type: String,
+            notify: true
+          },
+          biography:{
+            type: String,
+            notify: true
+          },
+          close: {
+            type: Boolean,
+            value: false,
+            notify: true
+          }
+        };
+      }
+      saveContact(){
+          this.dispatchEvent(new CustomEvent('save-contact', {
+              bubbles: true,
+              composed: true,
+              detail: {
+                  name: this.name,
+                  picture: this.picture,
+                  biography: this.biography
+              }
+          }));
+          this.name="";
+          this.picture="";
+          this.biography="";
+          this.closeModal();
+      }
+      closeModal(){
+          this.dispatchEvent(new CustomEvent('close-modal', {
+              bubbles: true,
+              composed: true,
+              detail: this.close
+          }));
+          this.name="";
+          this.picture="";
+          this.biography="";
+      }
+    }
+
+    window.customElements.define(ContactsModal.is, ContactsModal);
+  </script>
+</dom-module>

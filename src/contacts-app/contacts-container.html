@@ -1,0 +1,72 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="contacts-list.html">
+<link rel="import" href="contacts-profile.html">
+
+<dom-module id="contacts-container">
+  <template>
+    <style>
+      :host {
+          width: 99%;
+          margin: 0 auto;
+          font-family: sans-serif;
+      }
+      .header{
+          text-align: center;
+          height: 50px;
+      }
+      contacts-list{
+          width: 35%;
+          margin: 0 auto;
+          float: left;
+      }
+      contacts-profile{
+          width: 65%;
+          margin: 0 auto;
+          float: right;
+      }
+    </style>
+    <div class="header">
+        <h2>CONTACTS APP</h2>
+    </div>
+    <div class="container">
+        <contacts-list on-contact-selected="handleContactSelected" new-c="{{newContact}}"></contacts-list>
+        <contacts-profile contact="[[contac]]"></contacts-profile>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class ContactsContainer extends Polymer.Element {
+      static get is() { return 'contacts-container'; }
+      static get properties() {
+        return {
+          contac: {
+            type: Object,
+            notify: true
+          },
+          newContact: {
+              type: Object,
+              notify: true,
+              reflectToAttribute: true
+          }
+        };
+      }
+      handleContactSelected(event){
+          this.contac = event.detail;
+      }
+      /*attributeChange(){
+          alert(this.newContact);
+          this.shadowRoot.addEventListener('on-new-contact-changed', this.saveContact.bind(this));
+      }*/
+      saveContact(event){
+          this.newContact = event.detail;
+          alert(this.newContact);
+      }
+    }
+
+    window.customElements.define(ContactsContainer.is, ContactsContainer);
+  </script>
+</dom-module>

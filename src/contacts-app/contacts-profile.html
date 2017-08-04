@@ -1,0 +1,107 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
+
+<dom-module id="contacts-profile">
+  <template>
+    <style>
+      :host {
+          background-color: var(--background-color-list,#204056);
+          color: var(--color-list,#FFFFFF);
+          font-family: var(--font-family-list,sans-serif);
+          width: 100%;
+          height: auto;
+          display: flex;
+          flex-flow: column;
+          border-radius: 5px;
+      }
+      .header{
+          border: 1px solid #FFFFFF;
+          text-align: center;
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+      }
+      .container{
+          width: 100%;
+          background-color: #204056;
+          color: #FFFFFF;
+          border-left: 1px solid #FFFFFF;
+      }
+      .header-info{
+          display: flex;
+          flex-flow: row;
+      }
+      .image{
+          width: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
+      .name{
+          width: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 20px;
+          text-transform: uppercase;
+      }
+      .bio{
+          width: 100%;
+          text-align: center;
+          letter-spacing: 1px;
+      }
+      .bio p{
+          text-align: center;
+          width: 90%;
+          margin: 0px auto;
+          padding: 21px;
+      }
+    </style>
+    <div class="header">
+        <h2>Information</h2>
+    </div>
+    <div class="container">
+        <div class="header-info">
+            <div class="image">
+                <img src="[[contact.picture]]" width="100" height="100" alt="[[contact.name]]">
+            </div>
+            <div class="name">
+                <p>[[contact.name]]</p>
+            </div>
+        </div>
+        <div class="bio">
+            <p>[[contact.biography]]</p>
+        </div>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class ContactsProfile extends Polymer.Element {
+      static get is() { return 'contacts-profile'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'contacts-profile'
+          },
+          contact:{
+              type: Object,
+              value: {
+                  id: 0,
+                  name: 'name',
+                  picture: 'http://via.placeholder.com/350x150',
+                  biography: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+              },
+              notify: true
+          }
+
+        };
+      }
+    }
+
+    window.customElements.define(ContactsProfile.is, ContactsProfile);
+  </script>
+</dom-module>
